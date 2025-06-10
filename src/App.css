@@ -1,3 +1,8 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 .App {
   text-align: center;
 }
@@ -25,4 +30,36 @@
   .search-bar form {
     flex-direction: column;
   }
+}
+
+#toolbar {
+  display: flex;
+  justify-content: space-around;
+  /* gap: 50px; */
+}
+
+#movie-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  padding: 40px 300px;
+}
+
+.movie-card {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 18%;
+  gap: 5px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background-color: white;
+  border: 1px solid gray;
+}
+
+.movie-card * {
+  /* word-wrap: break-word; */
+  border-radius: 10px;
+  /* background-color: white; */
 }
