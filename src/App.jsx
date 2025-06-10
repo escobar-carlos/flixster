@@ -39,7 +39,7 @@ const App = () => {
   return (
     <div className="App">
       <header>
-        <h1>Flixster</h1>
+        <h1 id="title">Flixster</h1>
         <div id="toolbar">
           <SearchForm onQueryChange={handleQueryChange}/>
           <SortMenu />
