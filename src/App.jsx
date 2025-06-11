@@ -7,13 +7,20 @@ import LoadMore from './components/LoadMore'
 
 const App = () => {
   const [query, setQuery] = useState('');
-  const [page, setPage] = useState(0);
+  // const [isSearch, setIsSearch] = useState(false);
+  const [page, setPage] = useState(1);
   const [movieData, setMovieData] = useState([]);
   const apiKey = import.meta.env.VITE_APP_API_KEY;
 
-  const fetchData = async () => {
+  const fetchData = async (query) => {
     try {
-      const response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=1`);
+      let response = null;
+      if (query) {
+        const keywords = query.split(' ').join('%20');
+        response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}&include_adult=false&language=en-US&page=1`);
+      } else {
+        response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=1`);
+      }
       if (!response.ok) {
         throw new Error('Failed to fetch movie data.');
       }
@@ -24,17 +31,31 @@ const App = () => {
   }
 
   useEffect(() => {
-    const fetchMovieData = async () => {
-      const data = await fetchData(query);
+    const fetchMovieData = async (query) => {
+      setPage(1);
+      const data = await fetchData(query, page);
       const movieInfoData = data.results;
       setMovieData(movieInfoData);
     };
-    fetchMovieData();
+    fetchMovieData(query);
   }, [query]);
 
   const handleQueryChange = async (query) => {
     setQuery(query);
   }
+
+  // const handlePageChange = async (page) => {
+  //   setPage(page + 1);
+  // }
+
+  // useEffect(() => {
+  //   const fetchMoreMovieData = async () => {
+  //     const data = await fetchData(query, page);
+  //     const movieInfoData = data.results;
+  //     setMovieData((movieData.push(movieInfoData)));
+  //   };
+  //   fetchMoreMovieData();
+  // }, [page])
 
   return (
     <div className="App">
