@@ -6,13 +6,18 @@ function SearchForm( {onQueryChange} ) {
     onQueryChange(query);
   }
 
+  const handleReset = (event) => {
+    event.preventDefault();
+    onQueryChange('');
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit}>
         <input type="text" placeholder="Search"/>
         <div>
           <button type="submit">Submit</button>
-          <button type="reset">Clear</button>
+          <button type="reset" onClick={handleReset}>Clear</button>
         </div>
       </form>
     </>

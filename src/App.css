@@ -54,6 +54,7 @@ form button:hover {
   display: flex;
   flex-direction: column;
   /* flex-grow: 1; */
+  min-width: 150px;
   width: 18%;
   gap: 5px;
   box-sizing: border-box;
@@ -77,7 +78,7 @@ form button:hover {
 
 .features {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .features button {
@@ -91,6 +92,7 @@ form button:hover {
 .features button:hover {
   background-color: white;
   color: black;
+  cursor: pointer;
 }
 
 #load-more {
@@ -100,6 +102,10 @@ form button:hover {
   color: black;
   border: none;
   font-size: 20px;
+}
+
+#load-more:hover {
+  cursor: pointer;
 }
 
 footer {

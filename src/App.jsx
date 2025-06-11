@@ -7,19 +7,18 @@ import LoadMore from './components/LoadMore'
 
 const App = () => {
   const [query, setQuery] = useState('');
-  // const [isSearch, setIsSearch] = useState(false);
   const [page, setPage] = useState(1);
   const [movieData, setMovieData] = useState([]);
   const apiKey = import.meta.env.VITE_APP_API_KEY;
 
-  const fetchData = async (query) => {
+  const fetchData = async (query, page) => {
     try {
       let response = null;
       if (query) {
-        const keywords = query.split(' ').join('%20');
-        response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}&include_adult=false&language=en-US&page=1`);
+        const formattedQuery = query.split(' ').join('%20');
+        response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${formattedQuery}&include_adult=false&language=en-US&page=${page}`);
       } else {
-        response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=1`);
+        response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=${page}`);
       }
       if (!response.ok) {
         throw new Error('Failed to fetch movie data.');
@@ -44,18 +43,38 @@ const App = () => {
     setQuery(query);
   }
 
-  // const handlePageChange = async (page) => {
-  //   setPage(page + 1);
-  // }
+  const handlePageChange = async () => {
+    setPage(page + 1);
+  }
 
-  // useEffect(() => {
-  //   const fetchMoreMovieData = async () => {
-  //     const data = await fetchData(query, page);
-  //     const movieInfoData = data.results;
-  //     setMovieData((movieData.push(movieInfoData)));
-  //   };
-  //   fetchMoreMovieData();
-  // }, [page])
+  useEffect(() => {
+    const fetchMoreMovieData = async () => {
+      const data = await fetchData(query, page);
+      const movieInfoData = data.results;
+      const allMovieData = movieData.concat(movieInfoData);
+      setMovieData(allMovieData);
+    };
+
+    fetchMoreMovieData();
+  }, [page]);
+
+  const handleSortOptionSelected = async (sortOption) => {
+    let sortedMovieData = [...movieData];
+    switch (sortOption) {
+      case 'alphabetical':
+        sortedMovieData.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case 'chronological':
+        sortedMovieData.sort((a, b) => b.release_date.localeCompare(a.release_date));
+        break;
+      case 'vote-average':
+        sortedMovieData.sort((a, b) => b.vote_average - a.vote_average);
+        break;
+      default:
+        console.error("Invalid sort option selected.")
+    }
+    setMovieData(sortedMovieData);
+  }
 
   return (
     <div className="App">
@@ -63,12 +82,12 @@ const App = () => {
         <h1 id="title">Flixster</h1>
         <div id="toolbar">
           <SearchForm onQueryChange={handleQueryChange}/>
-          <SortMenu />
+          <SortMenu sort={handleSortOptionSelected}/>
         </div>
       </header>
       <main>
         <MovieList movieData={movieData}/>
-        <LoadMore />
+        <LoadMore onPageChange={handlePageChange}/>
       </main>
       <footer>2025 Flixter</footer>
     </div>

@@ -1,6 +1,6 @@
-function LoadMore() {
+function LoadMore({ onPageChange }) {
   return (
-    <button id="load-more">Load More</button>
+    <button id="load-more" onClick={onPageChange}>Load More</button>
   )
 }
 
