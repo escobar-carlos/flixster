@@ -10,7 +10,7 @@ function SearchForm({ onQueryChange, onClear }) {
     <>
       <form onSubmit={handleSubmit}>
         <input type="text" placeholder="Search"/>
-        <div>
+        <div id="search-helper-buttons">
           <button type="submit">Submit</button>
           <button type="reset" onClick={onClear}>Clear</button>
         </div>

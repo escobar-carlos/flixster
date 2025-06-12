@@ -11,10 +11,15 @@ const App = () => {
   const [page, setPage] = useState(1);
   const [movieData, setMovieData] = useState([]);
   const [selectedMovieData, setSelectedMovieData] = useState({});
+  const [sortOption, setSortOption] = useState('');
+  const [genreMap, setGenreMap] = useState({});
+  const [favoritedMovies, setFavoritedMovies] = useState([]);
+  const [watchedMovies, setWatchedMovies] = useState([]);
   const apiKey = import.meta.env.VITE_APP_API_KEY;
 
   const fetchData = async () => {
     try {
+      fetchGenreData();
       let response = null;
       if (query) {
         const formattedQuery = query.split(' ').join('%20');
@@ -31,6 +36,20 @@ const App = () => {
     }
   }
 
+  const fetchGenreData = async () => {
+    let response = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en`);
+    let genreData = await response.json();
+    const map = {};
+    genreData.genres.forEach(info => {
+      map[info.id] = info.name;
+    });
+    setGenreMap(map);
+  }
+
+  useEffect(() => {
+    fetchGenreData();
+  }, []);
+
   useEffect(() => {
     setPage(1);
   }, [query]);
@@ -42,7 +61,14 @@ const App = () => {
       if (page == 1) {
         setMovieData(movieInfoData);
       } else {
-        setMovieData(prev => [...prev, ...data.results]);
+        if (sortOption != '') {
+          setMovieData(prev => {
+            let combinedData = [...prev, ...data.results];
+            return sortMovieData(combinedData, sortOption);
+          })
+        } else {
+          setMovieData(prev => [...prev, ...data.results]);
+        }
       }
     };
     fetchMovieData();
@@ -61,32 +87,37 @@ const App = () => {
     setPage(prev => prev + 1);
   }
 
-  useEffect(() => {
-    const fetchMoreMovieData = async () => {
-      if (page == 1) return;
-      const data = await fetchData();
-      const movieInfoData = data.results;
-      const allMovieData = movieData.concat(movieInfoData);
-      setMovieData(allMovieData);
-    };
-
-    fetchMoreMovieData();
-  }, [page]);
-
   const updateSelectedMovieData = async (id) => {
-    const selectedMovie = movieData.filter(movie => movie.id == id)[0];
+    const selectedMovie = movieData.find(movie => movie.id == id);
     let image = `https://image.tmdb.org/t/p/original/${selectedMovie.poster_path}`;
+    let genres = selectedMovie.genre_ids.map(id => genreMap[id]).join(', ');
     // TODO: fetch genres here
     const selectedMovieDataObj = {
       title: selectedMovie.title,
       image,
       release_date: selectedMovie.release_date,
       overview: selectedMovie.overview,
+      genres
     }
-    setSelectedMovieData(selectedMovieDataObj)
+    setSelectedMovieData(selectedMovieDataObj);
   }
 
-  const handleSortOptionSelected = async (sortOption) => {
+  // TODO: refactor
+  const updateFavoritedMovies = async (id) => {
+    const favoritedMovie = movieData.find(movie => movie.id == id);
+    setFavoritedMovies(prev => {
+      return [...prev, ...favoritedMovie];
+    });
+  };
+
+  const updateWatchedMovies = async (id) => {
+    const watchedMovie = movieData.find(movie => movie.id == id);
+    setWatchedMovies(prev => {
+      return [...prev, ...watchedMovie];
+    });
+  };
+
+  const sortMovieData = (movieData, sortOption) => {
     let sortedMovieData = [...movieData];
     switch (sortOption) {
       case 'alphabetical':
@@ -101,6 +132,12 @@ const App = () => {
       default:
         console.error("Invalid sort option selected.")
     }
+    return sortedMovieData;
+  }
+
+  const handleSortOptionSelected = async (sortOption) => {
+    setSortOption(sortOption);
+    let sortedMovieData = sortMovieData(movieData, sortOption);
     setMovieData(sortedMovieData);
   }
 
@@ -116,7 +153,7 @@ const App = () => {
         </div>
       </nav>
       <main>
-        <MovieList movieData={movieData} onMovieClick={{updateSelectedMovieData, setIsOpen}}/>
+        <MovieList movieData={movieData} onMovieClick={{updateSelectedMovieData, setIsOpen}} onButtonClick={{updateFavoritedMovies, updateWatchedMovies}}/>
         <button id="load-more" onClick={handlePageChange}>Load More</button>
       </main>
       <Modal selectedMovieData={selectedMovieData} setIsOpen={setIsOpen} isOpen={isOpen}/>
