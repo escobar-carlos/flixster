@@ -1,4 +1,4 @@
-function SearchForm( {onQueryChange} ) {
+function SearchForm({ onQueryChange, onClear }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const query = event.target[0].value;
@@ -6,18 +6,13 @@ function SearchForm( {onQueryChange} ) {
     onQueryChange(query);
   }
 
-  const handleReset = (event) => {
-    event.preventDefault();
-    onQueryChange('');
-  };
-
   return (
     <>
       <form onSubmit={handleSubmit}>
         <input type="text" placeholder="Search"/>
         <div>
           <button type="submit">Submit</button>
-          <button type="reset" onClick={handleReset}>Clear</button>
+          <button type="reset" onClick={onClear}>Clear</button>
         </div>
       </form>
     </>

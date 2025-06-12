@@ -3,15 +3,17 @@ import './App.css'
 import SearchForm from './components/SearchForm'
 import SortMenu from './components/SortMenu'
 import MovieList from './components/MovieList'
-import LoadMore from './components/LoadMore'
+import Modal from './components/Modal'
 
 const App = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
   const [movieData, setMovieData] = useState([]);
+  const [selectedMovieData, setSelectedMovieData] = useState({});
   const apiKey = import.meta.env.VITE_APP_API_KEY;
 
-  const fetchData = async (query, page) => {
+  const fetchData = async () => {
     try {
       let response = null;
       if (query) {
@@ -30,26 +32,39 @@ const App = () => {
   }
 
   useEffect(() => {
-    const fetchMovieData = async (query) => {
-      setPage(1);
-      const data = await fetchData(query, page);
-      const movieInfoData = data.results;
-      setMovieData(movieInfoData);
-    };
-    fetchMovieData(query);
+    setPage(1);
   }, [query]);
+
+  useEffect(() => {
+    const fetchMovieData = async () => {
+      const data = await fetchData();
+      const movieInfoData = data.results;
+      if (page == 1) {
+        setMovieData(movieInfoData);
+      } else {
+        setMovieData(prev => [...prev, ...data.results]);
+      }
+    };
+    fetchMovieData();
+  }, [page, query]);
 
   const handleQueryChange = async (query) => {
     setQuery(query);
   }
 
+  const handleClear = async () => {
+    setQuery('');
+    setPage(1);
+  }
+
   const handlePageChange = async () => {
-    setPage(page + 1);
+    setPage(prev => prev + 1);
   }
 
   useEffect(() => {
     const fetchMoreMovieData = async () => {
-      const data = await fetchData(query, page);
+      if (page == 1) return;
+      const data = await fetchData();
       const movieInfoData = data.results;
       const allMovieData = movieData.concat(movieInfoData);
       setMovieData(allMovieData);
@@ -57,6 +72,19 @@ const App = () => {
 
     fetchMoreMovieData();
   }, [page]);
+
+  const updateSelectedMovieData = async (id) => {
+    const selectedMovie = movieData.filter(movie => movie.id == id)[0];
+    let image = `https://image.tmdb.org/t/p/original/${selectedMovie.poster_path}`;
+    // TODO: fetch genres here
+    const selectedMovieDataObj = {
+      title: selectedMovie.title,
+      image,
+      release_date: selectedMovie.release_date,
+      overview: selectedMovie.overview,
+    }
+    setSelectedMovieData(selectedMovieDataObj)
+  }
 
   const handleSortOptionSelected = async (sortOption) => {
     let sortedMovieData = [...movieData];
@@ -83,14 +111,15 @@ const App = () => {
       </header>
       <nav>
         <div id="toolbar">
-          <SearchForm onQueryChange={handleQueryChange}/>
+          <SearchForm onQueryChange={handleQueryChange} onClear={handleClear}/>
           <SortMenu sort={handleSortOptionSelected}/>
         </div>
       </nav>
       <main>
-        <MovieList movieData={movieData}/>
-        <LoadMore onPageChange={handlePageChange}/>
+        <MovieList movieData={movieData} onMovieClick={{updateSelectedMovieData, setIsOpen}}/>
+        <button id="load-more" onClick={handlePageChange}>Load More</button>
       </main>
+      <Modal selectedMovieData={selectedMovieData} setIsOpen={setIsOpen} isOpen={isOpen}/>
       <footer>2025 Flixter</footer>
     </div>
   )
