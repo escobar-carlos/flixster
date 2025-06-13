@@ -16,6 +16,7 @@ const App = () => {
   const [genreMap, setGenreMap] = useState({});
   const [favoritedMovies, setFavoritedMovies] = useState([]);
   const [watchedMovies, setWatchedMovies] = useState([]);
+  const [activeView, setActiveView] = useState('home');
   const apiKey = import.meta.env.VITE_APP_API_KEY;
 
   const fetchData = async () => {
@@ -102,32 +103,21 @@ const App = () => {
     setSelectedMovieData(selectedMovieDataObj);
   }
 
-  // TODO: refactor
   const updateFavoritedMovies = async (id) => {
     const favoritedMovie = movieData.find(movie => movie.id == id);
-    if (!favoritedMovies.includes(favoritedMovie)) {
-      let allFavoritedMovies = [...favoritedMovies];
-      allFavoritedMovies.push(favoritedMovie);
-      setFavoritedMovies(allFavoritedMovies);
+    if (favoritedMovies.includes(favoritedMovie)) {
+      setFavoritedMovies(prev => prev.filter(movie => movie != favoritedMovie));
     } else {
-      let allFavoritedMovies = [...favoritedMovies];
-      const indexOfMovie = movieData.indexOf(favoritedMovie);
-      allFavoritedMovies.splice(indexOfMovie, 1);
-      setFavoritedMovies(allFavoritedMovies);
+      setFavoritedMovies(prev => [...prev, favoritedMovie]);
     }
   };
 
   const updateWatchedMovies = async (id) => {
     const watchedMovie = movieData.find(movie => movie.id == id);
-    if (!watchedMovies.includes(watchedMovie)) {
-      let allWatchedMovies = [...watchedMovies];
-      allWatchedMovies.push(watchedMovie);
-      setWatchedMovies(allWatchedMovies);
+    if (watchedMovies.includes(watchedMovie)) {
+      setWatchedMovies(prev => prev.filter(movie => movie != watchedMovie));
     } else {
-      let allWatchedMovies = [...watchedMovies];
-      const indexOfMovie = movieData.indexOf(watchedMovie);
-      allWatchedMovies.splice(indexOfMovie, 1);
-      setWatchedMovies(allWatchedMovies);
+      setWatchedMovies(prev => [...prev, watchedMovie]);
     }
   };
 
@@ -152,25 +142,54 @@ const App = () => {
   const handleSortOptionSelected = async (sortOption) => {
     setSortOption(sortOption);
     let sortedMovieData = sortMovieData(movieData, sortOption);
-    setMovieData(sortedMovieData);
+    setMovieData(sortedMovieData)
   }
+
+  const onSidebarClick = async (label) => {
+    switch (label) {
+      case 'favorites':
+        setActiveView('favorites');
+        break;
+      case 'watched':
+        setActiveView('watched');
+        break;
+      case 'home':
+        setActiveView('home')
+        break;
+      default:
+        console.error("Invalid option was selected.")
+    }
+  }
+
+  const moviesToDisplay = activeView == 'favorites' ? favoritedMovies : activeView == 'watched' ? watchedMovies : movieData;
 
   return (
     <div className="App">
-      <Sidebar />
+      <Sidebar onClick={onSidebarClick}/>
       <div className="content-container">
         <header>
           <h1 id="title">Flixster &#x1F3A5;</h1>
         </header>
         <nav>
-          <div id="toolbar">
-            <SearchForm onQueryChange={handleQueryChange} onClear={handleClear}/>
-            <SortMenu sort={handleSortOptionSelected}/>
-          </div>
+          {activeView == 'home' && (
+            <div id="toolbar">
+              <SearchForm onQueryChange={handleQueryChange} onClear={handleClear}/>
+              <SortMenu sort={handleSortOptionSelected}/>
+            </div>
+          )}
         </nav>
         <main>
-          <MovieList movieData={movieData} onMovieClick={{updateSelectedMovieData, setIsOpen}} onButtonClick={{updateFavoritedMovies, updateWatchedMovies}}/>
-          <button id="load-more" onClick={handlePageChange}>Load More</button>
+          <MovieList
+            movieData={moviesToDisplay}
+            favoritedMovies={favoritedMovies}
+            watchedMovies={watchedMovies}
+
+            onMovieClick={{updateSelectedMovieData, setIsOpen}}
+            onButtonClick={{updateFavoritedMovies, updateWatchedMovies}}
+          />
+          {activeView == 'home' && (
+            <button id="load-more" onClick={handlePageChange}>Load More</button>
+          )}
         </main>
         <Modal selectedMovieData={selectedMovieData} setIsOpen={setIsOpen} isOpen={isOpen}/>
         <footer>2025 Flixter</footer>

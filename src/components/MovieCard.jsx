@@ -1,4 +1,4 @@
-function MovieCard({ image, title, rating, id, updateSelectedMovieData, setIsOpen, updateFavoritedMovies, updateWatchedMovies }) {
+function MovieCard({ image, title, rating, id, updateSelectedMovieData, setIsOpen, updateFavoritedMovies, updateWatchedMovies, isFavorited, isWatched }) {
 
   const handleModalClick = () => {
     updateSelectedMovieData(id);
@@ -23,8 +23,8 @@ function MovieCard({ image, title, rating, id, updateSelectedMovieData, setIsOpe
         <p>Rating: {rating.toFixed(2)}</p>
         <div className="features">
           {/* Button Component Here (reusable) */}
-          <button id="favorite" onClick={onFavorite}>Favorite &#x1F31F;</button>
-          <button id="watched" onClick={onWatched}>Watched &#x1F441;</button>
+          <button id="favorite" onClick={onFavorite}>Favorite {isFavorited ? '⭐' : '☆'}</button>
+          <button id="watched" onClick={onWatched}>Watched {isWatched ? '✅' : '☑️'}</button>
         </div>
       </div>
     </div>
