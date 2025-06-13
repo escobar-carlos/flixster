@@ -2,9 +2,9 @@
 
 Submitted by: **Carlos Escobar**
 
-Estimated time spent: **#** hours spent in total
+Estimated time spent: 16 hours spent in total
 
-Deployed Application (**required**): [Flixster Deployed Site](https://flixster-cr7f.onrender.com)
+Deployed Application: [Flixster Deployed Site](https://flixster-cr7f.onrender.com)
 
 ### Application Features
 
@@ -100,27 +100,29 @@ Deployed Application (**required**): [Flixster Deployed Site](https://flixster-c
 
 ### Walkthrough Video
 
-`TODO://` Add the embedded URL code to your animated app walkthrough below, `ADD_EMBEDDED_CODE_HERE`. Make sure the video or gif actually renders and animates when viewing this README. Ensure your walkthrough showcases the presence and/or functionality of all features you implemented above (check them off as you film!). Pay attention to any **VIDEO WALKTHROUGH SPECIAL INSTRUCTIONS** checkboxes listed above to ensure graders see the full functionality of your website! (🚫 Remove this paragraph after adding walkthrough video)
-
-`ADD_EMBEDDED_CODE_HERE`
+<div>
+  <a href="https://www.loom.com/share/615b18831d0e44e6816c5d3142d341f9"></a>
+  <a href="https://www.loom.com/share/615b18831d0e44e6816c5d3142d341f9">
+    <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/615b18831d0e44e6816c5d3142d341f9-7b428d9000f1d9c6-full-play.gif">
+  </a>
+</div>
 
 ### Reflection
 
 * Did the topics discussed in your labs prepare you to complete the assignment? Be specific, which features in your weekly assignment did you feel unprepared to complete?
 
-Add your response here
+The labs did prepare us for this project. An instance I can think of where it really helped was for the weather project where we had to display the different days in a card format. This was similar to the movie list and the card components. 
+
 
 * If you had more time, what would you have done differently? Would you have added additional features? Changed the way your project responded to a particular event, etc.
   
-Add your response here
+I am writing this with 6 hours till the deadline and am hoping I could better the code. I want to handle errors more gracefully, try to reuse the favorite/watched button as they share similar functionality, and add a cool hover effect when the cards are hovered over.
+
 
 * Reflect on your project demo, what went well? Were there things that maybe didn't go as planned? Did you notice something that your peer did that you would like to try next time?
 
-Add your response here
+The demo went fine. I got to highlight how I sort the incoming data whenever the 'Load More' button is pressed, which was a stretch feature of my own. Nothing really went bad, which is a good thing.
 
-### Open-source libraries used
-
-- Add any links to open-source libraries used in your project.
 
 ### Shout out
 
