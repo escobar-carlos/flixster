@@ -13,7 +13,6 @@ const App = () => {
   const [movieData, setMovieData] = useState([]);
   const [selectedMovieData, setSelectedMovieData] = useState({});
   const [sortOption, setSortOption] = useState('');
-  const [genreMap, setGenreMap] = useState({});
   const [favoritedMovies, setFavoritedMovies] = useState([]);
   const [watchedMovies, setWatchedMovies] = useState([]);
   const [activeView, setActiveView] = useState('home');
@@ -21,7 +20,6 @@ const App = () => {
 
   const fetchData = async () => {
     try {
-      fetchGenreData();
       let response = null;
       if (query) {
         const formattedQuery = query.split(' ').join('%20');
@@ -37,20 +35,6 @@ const App = () => {
       console.error(error);
     }
   }
-
-  const fetchGenreData = async () => {
-    let response = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en`);
-    let genreData = await response.json();
-    const map = {};
-    genreData.genres.forEach(info => {
-      map[info.id] = info.name;
-    });
-    setGenreMap(map);
-  }
-
-  useEffect(() => {
-    fetchGenreData();
-  }, []);
 
   useEffect(() => {
     setPage(1);
@@ -90,15 +74,24 @@ const App = () => {
   }
 
   const updateSelectedMovieData = async (id) => {
-    const selectedMovie = movieData.find(movie => movie.id == id);
-    let image = `https://image.tmdb.org/t/p/original/${selectedMovie.poster_path}`;
-    let genres = selectedMovie.genre_ids.map(id => genreMap[id]).join(', ');
+    let selectedMovieData = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US`);
+    let selectedMovie = await selectedMovieData.json();
+    let image = `https://image.tmdb.org/t/p/original/${selectedMovie.backdrop_path}`;
+    let genres = selectedMovie.genres.map(genre => genre.name).join(', ');
+    let movieVideosData = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=en-US`);
+    let movieVideos = await movieVideosData.json();
+
+    let movieTrailer = movieVideos.results.find(trailer => trailer.type == 'Trailer');
+    let movieTrailerLink = `https://www.youtube.com/embed/${movieTrailer.key}`;
+
     const selectedMovieDataObj = {
       title: selectedMovie.title,
       image,
+      runtime: selectedMovie.runtime,
       release_date: selectedMovie.release_date,
       overview: selectedMovie.overview,
-      genres
+      genres,
+      trailer: movieTrailerLink
     }
     setSelectedMovieData(selectedMovieDataObj);
   }

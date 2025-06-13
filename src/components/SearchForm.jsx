@@ -1,3 +1,5 @@
+import './SearchForm.css'
+
 function SearchForm({ onQueryChange, onClear }) {
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -8,7 +10,7 @@ function SearchForm({ onQueryChange, onClear }) {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form className="search-form" onSubmit={handleSubmit}>
         <input type="text" placeholder="Search"/>
         <div id="search-helper-buttons">
           <button type="submit">Submit</button>

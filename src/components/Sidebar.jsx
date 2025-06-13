@@ -1,3 +1,5 @@
+import './Sidebar.css'
+
 function Sidebar({ onClick }) {
 
   const handleClick = (event) => {

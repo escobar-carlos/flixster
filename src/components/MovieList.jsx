@@ -1,4 +1,5 @@
 import MovieCard from "./MovieCard"
+import './MovieList.css'
 
 function MovieList({ movieData, favoritedMovies, watchedMovies, onMovieClick, onButtonClick }) {
   const { updateSelectedMovieData, setIsOpen } = onMovieClick;

@@ -20,7 +20,7 @@ Deployed Application (**required**): [Flixster Deployed Site](https://flixster-c
   - [x] Users can load more current movies by clicking a button which adds more movies to the grid without reloading the entire page. 
 - [x] **Search Functionality**
   - [x] Users can use a search bar to search for movies by title.
-  - [ ] The search bar should include:
+  - [x] The search bar should include:
     - [x] Text input field
     - [x] Submit/Search button
     - [x] Clear button
@@ -42,7 +42,7 @@ Deployed Application (**required**): [Flixster Deployed Site](https://flixster-c
     - [x] The pop-up window has a shadow to show that it is a pop-up and appears floating on the screen.
     - [x] The backdrop of the pop-up appears darker or in a different shade than before. including:
     - [x] The pop-up displays additional details about the moving including:
-      - [ ] Runtime in minutes
+      - [x] Runtime in minutes
       - [x] Backdrop poster
       - [x] Release date
       - [x] Genres
@@ -59,17 +59,17 @@ Deployed Application (**required**): [Flixster Deployed Site](https://flixster-c
     - [x] Search bar
     - [x] Movie grid
     - [x] Footer section
-    - [ ] **VIDEO WALKTHROUGH SPECIAL INSTRUCTIONS**: To ease the grading process, please use the [color contrast checker](https://webaim.org/resources/contrastchecker/) to demonstrate to the grading team that text and background colors on your website have appropriate contrast. The Contrast Ratio should be above 4.5:1 and should have a green box surrounding it. 
+    - [x] **VIDEO WALKTHROUGH SPECIAL INSTRUCTIONS**: To ease the grading process, please use the [color contrast checker](https://webaim.org/resources/contrastchecker/) to demonstrate to the grading team that text and background colors on your website have appropriate contrast. The Contrast Ratio should be above 4.5:1 and should have a green box surrounding it. 
   - [x] **Deployment**
   - [x] Website is deployed via Render.
-  - [ ] **VIDEO WALKTHROUGH SPECIAL INSTRUCTIONS**: For ease of grading, please use the deployed version of your website when creating your walkthrough. 
+  - [x] **VIDEO WALKTHROUGH SPECIAL INSTRUCTIONS**: For ease of grading, please use the deployed version of your website when creating your walkthrough. 
 
 #### STRETCH FEATURES
 
 
-- [ ] **Embedded Movie Trailers**
-  - [ ] Within the pop-up modal displaying a movie's details, the movie trailer is viewable.
-    - [ ] When the trailer is clicked, users can play the movie trailer.
+- [x] **Embedded Movie Trailers**
+  - [x] Within the pop-up modal displaying a movie's details, the movie trailer is viewable.
+    - [x] When the trailer is clicked, users can play the movie trailer.
 - [x] **Favorite Button**
   - [x] For each movie displayed, users can favorite the movie.
   - [x] There should be visual element (such as a heart icon) on each movie's tile to show whether or not the movie has been favorited.

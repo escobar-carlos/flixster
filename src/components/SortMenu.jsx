@@ -1,3 +1,5 @@
+import './SortMenu.css'
+
 function SortMenu( {sort} ) {
   const handleChange = (event) => {
     sort(event.target.value);

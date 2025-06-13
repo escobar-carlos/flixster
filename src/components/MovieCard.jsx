@@ -1,3 +1,5 @@
+import './MovieCard.css'
+
 function MovieCard({ image, title, rating, id, updateSelectedMovieData, setIsOpen, updateFavoritedMovies, updateWatchedMovies, isFavorited, isWatched }) {
 
   const handleModalClick = () => {

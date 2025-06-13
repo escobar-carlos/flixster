@@ -1,0 +1,23 @@
+.search-form {
+  display: flex;
+  gap: 1vw;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.search-form * {
+  border: none;
+  border-radius: 5px;
+  padding: .1vh .2vw;
+}
+
+.search-form button {
+  margin: 0px .1vw;
+  background-color: #f4f4f4;
+  color: black;
+}
+
+.search-form button:hover {
+  background-color: black;
+  color: white;
+}
