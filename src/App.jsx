@@ -4,6 +4,7 @@ import SearchForm from './components/SearchForm'
 import SortMenu from './components/SortMenu'
 import MovieList from './components/MovieList'
 import Modal from './components/Modal'
+import Sidebar from './components/Sidebar'
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -91,7 +92,6 @@ const App = () => {
     const selectedMovie = movieData.find(movie => movie.id == id);
     let image = `https://image.tmdb.org/t/p/original/${selectedMovie.poster_path}`;
     let genres = selectedMovie.genre_ids.map(id => genreMap[id]).join(', ');
-    // TODO: fetch genres here
     const selectedMovieDataObj = {
       title: selectedMovie.title,
       image,
@@ -105,16 +105,30 @@ const App = () => {
   // TODO: refactor
   const updateFavoritedMovies = async (id) => {
     const favoritedMovie = movieData.find(movie => movie.id == id);
-    setFavoritedMovies(prev => {
-      return [...prev, ...favoritedMovie];
-    });
+    if (!favoritedMovies.includes(favoritedMovie)) {
+      let allFavoritedMovies = [...favoritedMovies];
+      allFavoritedMovies.push(favoritedMovie);
+      setFavoritedMovies(allFavoritedMovies);
+    } else {
+      let allFavoritedMovies = [...favoritedMovies];
+      const indexOfMovie = movieData.indexOf(favoritedMovie);
+      allFavoritedMovies.splice(indexOfMovie, 1);
+      setFavoritedMovies(allFavoritedMovies);
+    }
   };
 
   const updateWatchedMovies = async (id) => {
     const watchedMovie = movieData.find(movie => movie.id == id);
-    setWatchedMovies(prev => {
-      return [...prev, ...watchedMovie];
-    });
+    if (!watchedMovies.includes(watchedMovie)) {
+      let allWatchedMovies = [...watchedMovies];
+      allWatchedMovies.push(watchedMovie);
+      setWatchedMovies(allWatchedMovies);
+    } else {
+      let allWatchedMovies = [...watchedMovies];
+      const indexOfMovie = movieData.indexOf(watchedMovie);
+      allWatchedMovies.splice(indexOfMovie, 1);
+      setWatchedMovies(allWatchedMovies);
+    }
   };
 
   const sortMovieData = (movieData, sortOption) => {
@@ -143,21 +157,24 @@ const App = () => {
 
   return (
     <div className="App">
-      <header>
-        <h1 id="title">Flixster &#x1F3A5;</h1>
-      </header>
-      <nav>
-        <div id="toolbar">
-          <SearchForm onQueryChange={handleQueryChange} onClear={handleClear}/>
-          <SortMenu sort={handleSortOptionSelected}/>
-        </div>
-      </nav>
-      <main>
-        <MovieList movieData={movieData} onMovieClick={{updateSelectedMovieData, setIsOpen}} onButtonClick={{updateFavoritedMovies, updateWatchedMovies}}/>
-        <button id="load-more" onClick={handlePageChange}>Load More</button>
-      </main>
-      <Modal selectedMovieData={selectedMovieData} setIsOpen={setIsOpen} isOpen={isOpen}/>
-      <footer>2025 Flixter</footer>
+      <Sidebar />
+      <div className="content-container">
+        <header>
+          <h1 id="title">Flixster &#x1F3A5;</h1>
+        </header>
+        <nav>
+          <div id="toolbar">
+            <SearchForm onQueryChange={handleQueryChange} onClear={handleClear}/>
+            <SortMenu sort={handleSortOptionSelected}/>
+          </div>
+        </nav>
+        <main>
+          <MovieList movieData={movieData} onMovieClick={{updateSelectedMovieData, setIsOpen}} onButtonClick={{updateFavoritedMovies, updateWatchedMovies}}/>
+          <button id="load-more" onClick={handlePageChange}>Load More</button>
+        </main>
+        <Modal selectedMovieData={selectedMovieData} setIsOpen={setIsOpen} isOpen={isOpen}/>
+        <footer>2025 Flixter</footer>
+      </div>
     </div>
   )
 }

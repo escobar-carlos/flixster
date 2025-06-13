@@ -6,12 +6,15 @@ function MovieCard({ image, title, rating, id, updateSelectedMovieData, setIsOpe
   }
 
   const onFavorite = (event) => {
-    setFavoritedMovies()
+    event.stopPropagation();
+    updateFavoritedMovies(id);
   }
 
   const onWatched = (event) => {
-    setWatchedMovies()
+    event.stopPropagation();
+    updateWatchedMovies(id);
   }
+  
   return (
     <div className="movie-card" onClick={handleModalClick}>
       <img src={image} alt={`Poster Image of ${title}`} />

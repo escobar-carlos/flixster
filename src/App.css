@@ -7,13 +7,13 @@
   text-align: center;
   background-color: #8AAAE5;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   min-height: 100vh;
 }
 
 #title {
   padding: .5vh 0vw;
-  background-color: #6795e5;
+  /* background-color: #6795e5; */
   margin-bottom: 1.5vh;
 }
 
@@ -54,12 +54,42 @@ form button:hover {
   color: white;
 }
 
+.content-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 85vw;
+}
+
+
+.sidebar {
+  background-color: #6795e5;
+  display: flex;
+  flex-direction: column;
+  width: 15vw;
+  height: auto;
+  gap: 2vh;
+  flex-shrink: 0;
+  /* position: sticky; */
+}
+
+.sidebar button {
+  background-color: transparent;
+  border: none;
+  text-align: center;
+}
+
+.sidebar button:hover {
+  color: #2c5db2;
+  background-color: inherit;
+}
+
 #movie-list {
+  max-width: 100vw;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 2vw;
-  margin: 2vh 10vw;
+  margin: 2vh 5vw;
 }
 
 .movie-card {
@@ -114,7 +144,7 @@ form button:hover {
 }
 
 #load-more {
-  margin: 1vh 0px 3vh;
+  margin: 1vh auto 3vh;
   border-radius: 5px;
   color: black;
   border: none;
@@ -180,8 +210,7 @@ form button:hover {
 }
 
 footer {
+  text-align: center;
   padding: 1vh;
   margin-top: auto;
-  width: 100%;
-  background-color: #6795e5;
 }
