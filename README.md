@@ -101,11 +101,11 @@ Deployed Application: [Flixster Deployed Site](https://flixster-cr7f.onrender.co
 ### Walkthrough Video
 
 <div>
-  <a href="https://www.loom.com/share/615b18831d0e44e6816c5d3142d341f9"></a>
-  <a href="https://www.loom.com/share/615b18831d0e44e6816c5d3142d341f9">
-    <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/615b18831d0e44e6816c5d3142d341f9-7b428d9000f1d9c6-full-play.gif">
-  </a>
-</div>
+    <a href="https://www.loom.com/share/eab530fe1cda47db9e3b3d84e46fb8df"></a>
+    <a href="https://www.loom.com/share/eab530fe1cda47db9e3b3d84e46fb8df">
+      <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/eab530fe1cda47db9e3b3d84e46fb8df-31002021fb402332-full-play.gif">
+    </a>
+  </div>
 
 ### Reflection
 
