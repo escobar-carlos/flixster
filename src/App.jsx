@@ -52,21 +52,21 @@ const App = () => {
     fetchMovieData();
   }, [page, query]);
 
-  const handleQueryChange = async (query) => {
+  const handleQueryChange = (query) => {
     setQuery(query);
   };
 
-  const handleClear = async () => {
+  const handleClear = () => {
     setQuery('');
     setPage(1);
   };
 
-  const handlePageChange = async () => {
+  const handlePageChange = () => {
     setPage(prev => prev + 1);
   };
 
-  const updateModalData = async (modalMovieInfo) => {
-    await setModalData(modalMovieInfo);
+  const updateModalData = (modalMovieInfo) => {
+    setModalData(modalMovieInfo);
     setIsOpen(true);
   };
 
@@ -77,15 +77,15 @@ const App = () => {
     })
   };
 
-  const updateFavoritedMovies = async (id) => {
+  const updateFavoritedMovies = (id) => {
     updateMovies(id, setFavoritedMovies);
   };
 
-  const updateWatchedMovies = async (id) => {
+  const updateWatchedMovies = (id) => {
     updateMovies(id, setWatchedMovies);
   };
 
-  const handleSort = async (sortedMovieData) => {
+  const handleSort = (sortedMovieData) => {
     setMovieData(sortedMovieData);
   };
 

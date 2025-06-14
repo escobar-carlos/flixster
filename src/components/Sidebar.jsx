@@ -2,7 +2,7 @@ import './Sidebar.css'
 
 function Sidebar({ setActiveView }) {
 
-  const updateActiveView = async (event) => {
+  const updateActiveView = (event) => {
     const label = event.target.textContent.toLowerCase();
     switch (label) {
       case 'favorites':

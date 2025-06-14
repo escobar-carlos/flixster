@@ -13,7 +13,7 @@ function MovieCard({ image, title, rating, id, updateModalData, updateFavoritedM
     let movieVideos = await movieVideosData.json();
 
     let movieTrailer = movieVideos.results.find(trailer => trailer.type == 'Trailer');
-    let movieTrailerLink = `https://www.youtube.com/embed/${movieTrailer.key}`;
+    let movieTrailerLink = movieTrailer ? `https://www.youtube.com/embed/${movieTrailer.key}` : null;
 
     const modalMovieInfo = {
       title: modalMovie.title,
