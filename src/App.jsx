@@ -11,6 +11,7 @@ const App = () => {
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
   const [movieData, setMovieData] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
   const [modalData, setModalData] = useState({});
   const [favoritedMovies, setFavoritedMovies] = useState([]);
   const [watchedMovies, setWatchedMovies] = useState([]);
@@ -43,6 +44,8 @@ const App = () => {
     const fetchMovieData = async () => {
       const data = await fetchData();
       const movieInfoData = data.results;
+      setTotalPages(data.total_pages);
+
       if (page == 1) {
         setMovieData(movieInfoData);
       } else {
@@ -114,7 +117,7 @@ const App = () => {
             updateModalData={updateModalData}
             onButtonClick={{updateFavoritedMovies, updateWatchedMovies}}
           />
-          {activeView == 'home' && (
+          {activeView == 'home' && page < totalPages && (
             <button id="load-more" onClick={handlePageChange}>Load More</button>
           )}
         </main>
