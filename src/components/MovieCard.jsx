@@ -1,10 +1,31 @@
 import './MovieCard.css'
 
-function MovieCard({ image, title, rating, id, updateSelectedMovieData, setIsOpen, updateFavoritedMovies, updateWatchedMovies, isFavorited, isWatched }) {
+function MovieCard({ image, title, rating, id, updateModalData, updateFavoritedMovies, updateWatchedMovies, isFavorited, isWatched }) {
 
-  const handleModalClick = () => {
-    updateSelectedMovieData(id);
-    setIsOpen(true);
+  const apiKey = import.meta.env.VITE_APP_API_KEY;
+
+  const handleCardClick = async () => {
+    let modalMovieData = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US`);
+    let modalMovie = await modalMovieData.json();
+    let backdrop = `https://image.tmdb.org/t/p/original/${modalMovie.backdrop_path}`;
+    let genres = modalMovie.genres.map(genre => genre.name).join(', ');
+    let movieVideosData = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=en-US`);
+    let movieVideos = await movieVideosData.json();
+
+    let movieTrailer = movieVideos.results.find(trailer => trailer.type == 'Trailer');
+    let movieTrailerLink = `https://www.youtube.com/embed/${movieTrailer.key}`;
+
+    const modalMovieInfo = {
+      title: modalMovie.title,
+      backdrop,
+      runtime: modalMovie.runtime,
+      release_date: modalMovie.release_date,
+      overview: modalMovie.overview,
+      genres,
+      trailer: movieTrailerLink
+    }
+
+    updateModalData(modalMovieInfo);
   }
 
   const onFavorite = (event) => {
@@ -18,7 +39,7 @@ function MovieCard({ image, title, rating, id, updateSelectedMovieData, setIsOpe
   }
   
   return (
-    <div className="movie-card" onClick={handleModalClick}>
+    <div className="movie-card" onClick={handleCardClick}>
       <img src={image} alt={`Poster Image of ${title}`} />
       <div className="movie-info">
         <h3>{title}</h3>
