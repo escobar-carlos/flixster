@@ -2,7 +2,7 @@
 
 Submitted by: **Carlos Escobar**
 
-Estimated time spent: 16 hours spent in total
+Estimated time spent: 18 hours spent in total
 
 Deployed Application: [Flixster Deployed Site](https://flixster-cr7f.onrender.com)
 
@@ -101,11 +101,10 @@ Deployed Application: [Flixster Deployed Site](https://flixster-cr7f.onrender.co
 ### Walkthrough Video
 
 <div>
-    <a href="https://www.loom.com/share/eab530fe1cda47db9e3b3d84e46fb8df"></a>
-    <a href="https://www.loom.com/share/eab530fe1cda47db9e3b3d84e46fb8df">
-      <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/eab530fe1cda47db9e3b3d84e46fb8df-31002021fb402332-full-play.gif">
-    </a>
-  </div>
+  <a href="https://www.loom.com/share/f4bba1ed1ec64b80a91e72a3bb8e612c">
+    <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/f4bba1ed1ec64b80a91e72a3bb8e612c-44d85d6f509b8691-full-play.gif">
+  </a>
+</div>
 
 ### Reflection
 
@@ -116,12 +115,12 @@ The labs did prepare us for this project. An instance I can think of where it re
 
 * If you had more time, what would you have done differently? Would you have added additional features? Changed the way your project responded to a particular event, etc.
   
-I am writing this with 6 hours till the deadline and am hoping I could better the code. I want to handle errors more gracefully, try to reuse the favorite/watched button as they share similar functionality, and add a cool hover effect when the cards are hovered over.
+If I had more time, I would improve the responsiveness of the page and make the UI nicer. After moving the sorting functionality to the sortMenu component, I lost the ability to sort the incoming movies whenever the 'load more' button was pressed, so that is also something I would love to bring back. 
 
 
 * Reflect on your project demo, what went well? Were there things that maybe didn't go as planned? Did you notice something that your peer did that you would like to try next time?
 
-The demo went fine. I got to highlight how I sort the incoming data whenever the 'Load More' button is pressed, which was a stretch feature of my own. Nothing really went bad, which is a good thing.
+The demo went great. I got to highlight how whenever one goes to the 'Favorites' or 'Watched' tab, the toolbar and load more button goes away. A peer of mine had the background of the modal set to the backdrop image of the movie which was really nice visually and something I would love to experiment with on the next project.
 
 
 ### Shout out
