@@ -1,3 +1,4 @@
+import Button from './Button';
 import './MovieCard.css'
 
 function MovieCard({ image, title, rating, id, updateModalData, updateFavoritedMovies, updateWatchedMovies, isFavorited, isWatched }) {
@@ -36,16 +37,6 @@ function MovieCard({ image, title, rating, id, updateModalData, updateFavoritedM
       console.error('Error loading movie data: ', error);
     }
   };
-
-  const onFavorite = (event) => {
-    event.stopPropagation();
-    updateFavoritedMovies(id);
-  };
-
-  const onWatched = (event) => {
-    event.stopPropagation();
-    updateWatchedMovies(id);
-  };
   
   return (
     <div className="movie-card" onClick={handleCardClick}>
@@ -54,9 +45,8 @@ function MovieCard({ image, title, rating, id, updateModalData, updateFavoritedM
         <h3>{title}</h3>
         <p>Rating: {rating.toFixed(2)}</p>
         <div className="features">
-          {/* Button Component Here (reusable) */}
-          <button id="favorite" onClick={onFavorite}>Favorite {isFavorited ? '⭐' : '☆'}</button>
-          <button id="watched" onClick={onWatched}>Watched {isWatched ? '✅' : '☑️'}</button>
+          <Button id={id} updateData={updateFavoritedMovies} isActive={isFavorited} text={'Favorite'} icons={['⭐', '☆']}/>
+          <Button id={id} updateData={updateWatchedMovies} isActive={isWatched} text={'Watched'} icons={['✅', '☑️']}/>
         </div>
       </div>
     </div>

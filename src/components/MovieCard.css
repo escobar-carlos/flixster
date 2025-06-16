@@ -35,17 +35,3 @@
   justify-content: space-between;
   gap: 1vw;
 }
-
-.features button {
-  border-radius: 0px;
-  background-color: white;
-  color: black;
-  border: none;
-  font-weight: lighter;
-}
-
-.features button:hover {
-  background-color: white;
-  color: black;
-  cursor: pointer;
-}
